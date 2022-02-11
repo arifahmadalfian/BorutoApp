@@ -13,7 +13,8 @@ import com.arifahmadalfian.borutoapp.domain.model.HeroRemoteKey
         Hero::class,
         HeroRemoteKey::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(DatabaseConverter::class)
 abstract class BorutoDatabase : RoomDatabase() {
