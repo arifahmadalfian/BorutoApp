@@ -22,6 +22,7 @@ import com.arifahmadalfian.borutoapp.R
 import com.arifahmadalfian.borutoapp.navigation.OnBoardingPage
 import com.arifahmadalfian.borutoapp.ui.theme.*
 import com.arifahmadalfian.borutoapp.util.Constants.ON_BOARDING_PAGE_COUNT
+import com.arifahmadalfian.borutoapp.util.Constants.ON_BOARDING_PAGE_FINISH
 import com.google.accompanist.pager.*
 
 @ExperimentalPagerApi
@@ -120,7 +121,7 @@ fun FinishButton(
     ) {
         AnimatedVisibility(
             modifier = Modifier.fillMaxWidth(),
-            visible = pagerState.currentPage == 2
+            visible = pagerState.currentPage == ON_BOARDING_PAGE_FINISH
         ) {
             Button(
                 onClick = onClick,
