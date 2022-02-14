@@ -1,4 +1,4 @@
-package com.arifahmadalfian.borutoapp.presentation.screens.splash
+package com.arifahmadalfian.borutoapp.presentation.screens.welcome
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -16,10 +16,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.arifahmadalfian.borutoapp.R
 import com.arifahmadalfian.borutoapp.navigation.OnBoardingPage
+import com.arifahmadalfian.borutoapp.navigation.Screen
 import com.arifahmadalfian.borutoapp.ui.theme.*
 import com.arifahmadalfian.borutoapp.util.Constants.ON_BOARDING_PAGE_COUNT
 import com.arifahmadalfian.borutoapp.util.Constants.ON_BOARDING_PAGE_FINISH
@@ -27,7 +28,10 @@ import com.google.accompanist.pager.*
 
 @ExperimentalPagerApi
 @Composable
-fun WelcomeScreen(navController: NavHostController) {
+fun WelcomeScreen(
+    navController: NavHostController,
+    welcomeViewModel: WelcomeViewModel = hiltViewModel()
+) {
     val pages = listOf(
         OnBoardingPage.First,
         OnBoardingPage.Second,
@@ -63,7 +67,9 @@ fun WelcomeScreen(navController: NavHostController) {
                 .weight(1f),
             pagerState = pagerState
         ) {
-
+            navController.popBackStack()
+            navController.navigate(Screen.Home.route)
+            welcomeViewModel.saveOnBoardingState(completed = true)
         }
     }
 }

@@ -1,8 +1,12 @@
 package com.arifahmadalfian.borutoapp.di
 
 import android.content.Context
+import com.arifahmadalfian.borutoapp.data.Repository
 import com.arifahmadalfian.borutoapp.data.pref.DataStoreOperation
 import com.arifahmadalfian.borutoapp.domain.repository.IDataStoreOperation
+import com.arifahmadalfian.borutoapp.domain.use_case.UseCases
+import com.arifahmadalfian.borutoapp.domain.use_case.read_onboarding.ReadOnBoarding
+import com.arifahmadalfian.borutoapp.domain.use_case.save_onboarding.SaveOnBoarding
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +24,14 @@ object DataStoreModule {
         @ApplicationContext context: Context
     ): IDataStoreOperation {
         return DataStoreOperation(context = context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUseCases(repository: Repository): UseCases {
+        return UseCases(
+            saveOnBoarding = SaveOnBoarding(repository = repository),
+            readOnBoarding = ReadOnBoarding(repository = repository)
+        )
     }
 }
