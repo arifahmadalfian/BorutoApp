@@ -27,7 +27,6 @@ fun SplashScreen(
     navController: NavHostController,
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
-
     val onBoardingCompleted by splashViewModel.onBoardingCompleted.collectAsState()
 
     val degrees = remember { Animatable(0f) }
