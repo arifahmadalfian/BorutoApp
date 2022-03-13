@@ -44,7 +44,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitInstance(
+    fun provideBorutoApi(
         retrofit: Retrofit
     ): BorutoApi {
         return retrofit.create(BorutoApi::class.java)
