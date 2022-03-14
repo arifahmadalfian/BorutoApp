@@ -1,6 +1,6 @@
 package com.arifahmadalfian.borutoapp.domain.use_case.save_onboarding
 
-import com.arifahmadalfian.borutoapp.data.Repository
+import com.arifahmadalfian.borutoapp.data.repository.Repository
 
 class SaveOnBoarding(
     private val repository: Repository

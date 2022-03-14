@@ -16,4 +16,6 @@ object Constants {
     const val PREV_NAME = "boruto_prev"
     const val PREV_KEY = "on_boarding_completed"
 
+    const val ITEMS_PER_PAGE = 3
+
 }
