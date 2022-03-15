@@ -13,6 +13,7 @@ val Black000 = Color(0xFF000000)
 
 val LightGray = Color(0xFFD8D8D8)
 val DarkGray = Color(0xFF2A2A2A)
+val StarColor = Color(0xFFFFC94D)
 
 val Colors.welcomeScreenBackgroundColor
     @Composable
