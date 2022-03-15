@@ -63,7 +63,7 @@ object NetworkModule {
     ): IRemoteDataSource {
         return RemoteDataSource(
             borutoApi = borutoApi,
-            borutoDatabase = borutoDatabase
+            borutoDatabase = borutoDatabase,
         )
     }
 }

@@ -5,6 +5,7 @@ import com.arifahmadalfian.borutoapp.data.repository.Repository
 import com.arifahmadalfian.borutoapp.data.pref.DataStoreOperation
 import com.arifahmadalfian.borutoapp.domain.repository.IDataStoreOperation
 import com.arifahmadalfian.borutoapp.domain.use_case.UseCases
+import com.arifahmadalfian.borutoapp.domain.use_case.get_all_heroes.GetAllHeroesUseCase
 import com.arifahmadalfian.borutoapp.domain.use_case.read_onboarding.ReadOnBoarding
 import com.arifahmadalfian.borutoapp.domain.use_case.save_onboarding.SaveOnBoarding
 import dagger.Module
@@ -31,7 +32,8 @@ object DataStoreModule {
     fun provideUseCases(repository: Repository): UseCases {
         return UseCases(
             saveOnBoarding = SaveOnBoarding(repository = repository),
-            readOnBoarding = ReadOnBoarding(repository = repository)
+            readOnBoarding = ReadOnBoarding(repository = repository),
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository = repository)
         )
     }
 }
