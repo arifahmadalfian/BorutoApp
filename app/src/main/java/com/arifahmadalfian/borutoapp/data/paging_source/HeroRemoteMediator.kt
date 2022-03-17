@@ -21,30 +21,30 @@ class HeroRemoteMediator @Inject constructor(
     private val heroRemoteKeysDao = borutoDatabase.heroRemoteKeysDao()
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Hero>): MediatorResult {
-        val page = when (loadType) {
-            LoadType.REFRESH -> {
-                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state = state)
-                remoteKeys?.nextPage?.minus(1) ?: 1
-            }
-            LoadType.PREPEND -> {
-                val remoteKeys = getRemoteKeyForFirstItem(state = state)
-                val prevPage = remoteKeys?.prevPage
-                    ?: return MediatorResult.Success(
-                        endOfPaginationReached = remoteKeys != null
-                    )
-                prevPage
-            }
-            LoadType.APPEND -> {
-                val remoteKeys = getRemoteKeyForLastItem(state = state)
-                val nextPage = remoteKeys?.nextPage
-                    ?: return MediatorResult.Success(
-                        endOfPaginationReached = remoteKeys != null
-                    )
-                nextPage
-            }
-        }
-
         return try {
+            val page = when (loadType) {
+                LoadType.REFRESH -> {
+                    val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                    remoteKeys?.nextPage?.minus(1) ?: 1
+                }
+                LoadType.PREPEND -> {
+                    val remoteKeys = getRemoteKeyForFirstItem(state)
+                    val prevPage = remoteKeys?.prevPage
+                        ?: return MediatorResult.Success(
+                            endOfPaginationReached = remoteKeys != null
+                        )
+                    prevPage
+                }
+                LoadType.APPEND -> {
+                    val remoteKeys = getRemoteKeyForLastItem(state)
+                    val nextPage = remoteKeys?.nextPage
+                        ?: return MediatorResult.Success(
+                            endOfPaginationReached = remoteKeys != null
+                        )
+                    nextPage
+                }
+            }
+
             val response = borutoApi.getAllHeroes(page = page)
             if (response.heroes?.isNullOrEmpty() == false) {
                 borutoDatabase.withTransaction {
@@ -52,7 +52,7 @@ class HeroRemoteMediator @Inject constructor(
                         heroDao.deleteAllHeroes()
                         heroRemoteKeysDao.deleteAllRemoteKeys()
                     }
-                    val prevPage = response.prefPage
+                    val prevPage = response.prevPage
                     val nextPage = response.nextPage
                     val keys = response.heroes.map { hero ->
                         HeroRemoteKeys(
@@ -67,7 +67,7 @@ class HeroRemoteMediator @Inject constructor(
             }
             MediatorResult.Success(endOfPaginationReached = response.nextPage == null)
         } catch (e: Exception) {
-            MediatorResult.Error(e)
+            return MediatorResult.Error(e)
         }
     }
 
