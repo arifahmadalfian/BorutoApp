@@ -18,4 +18,8 @@ object Constants {
 
     const val ITEMS_PER_PAGE = 3
 
+    const val FILLED_STARS = "filledStars"
+    const val HALF_FILLED_STARS = "halfFilledStars"
+    const val EMPTY_STARS = "emptyStars"
+
 }
