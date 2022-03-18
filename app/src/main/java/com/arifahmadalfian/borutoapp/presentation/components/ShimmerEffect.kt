@@ -4,6 +4,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -19,7 +20,14 @@ import com.arifahmadalfian.borutoapp.ui.theme.*
 
 @Composable
 fun ShimmerEffect() {
-
+    LazyColumn(
+        contentPadding = PaddingValues(all = SMALL_PADDING),
+        verticalArrangement = Arrangement.spacedBy(space = SMALL_PADDING)
+    ) {
+        items(count = 3) {
+            AnimateShimmerEffect()
+        }
+    }
 }
 
 @Composable
@@ -98,8 +106,8 @@ fun ShimmerItem(brush: Brush) {
     }
 }
 
-@Composable
-@Preview
-fun Shimmer() {
-    AnimateShimmerEffect()
-}
+//@Composable
+//@Preview
+//fun Shimmer() {
+//    AnimateShimmerEffect()
+//}
