@@ -1,5 +1,6 @@
 package com.arifahmadalfian.borutoapp.data.paging_source
 
+import android.annotation.SuppressLint
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -9,6 +10,8 @@ import com.arifahmadalfian.borutoapp.data.local.BorutoDatabase
 import com.arifahmadalfian.borutoapp.data.remote.api.BorutoApi
 import com.arifahmadalfian.borutoapp.domain.model.Hero
 import com.arifahmadalfian.borutoapp.domain.model.HeroRemoteKeys
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -19,6 +22,19 @@ class HeroRemoteMediator @Inject constructor(
 
     private val heroDao = borutoDatabase.heroDao()
     private val heroRemoteKeysDao = borutoDatabase.heroRemoteKeysDao()
+
+    override suspend fun initialize(): InitializeAction {
+        val currentTime = System.currentTimeMillis()
+        val lastUpdated = heroRemoteKeysDao.getRemoteKeys(heroId = 1)?.lastUpdated ?: 0L
+        val cacheTimeout = 5
+
+        val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
+        return if (diffInMinutes.toInt() >= cacheTimeout) {
+            InitializeAction.SKIP_INITIAL_REFRESH
+        } else {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
+    }
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Hero>): MediatorResult {
         return try {
@@ -58,7 +74,8 @@ class HeroRemoteMediator @Inject constructor(
                         HeroRemoteKeys(
                             id = hero.id,
                             prevPage = prevPage,
-                            nextPage = nextPage
+                            nextPage = nextPage,
+                            lastUpdated = response.lastUpdated
                         )
                     }
                     heroRemoteKeysDao.addAllRemoteKeys(heroRemoteKeys = keys)
@@ -98,4 +115,10 @@ class HeroRemoteMediator @Inject constructor(
                 heroRemoteKeysDao.getRemoteKeys(heroId = hero.id)
             }
     }
+
+//    private fun parseMillis(milis: Long): String {
+//        val date = Date(milis)
+//        val format = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ROOT)
+//        return format.format(date)
+//    }
 }

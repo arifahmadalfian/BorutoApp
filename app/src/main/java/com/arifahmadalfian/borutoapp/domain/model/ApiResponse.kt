@@ -8,5 +8,6 @@ data class ApiResponse<T>(
     val message:String? = null,
     val prevPage: Int? = null,
     val nextPage: Int? = null,
-    val heroes: T? = null // always list(see HeroRemoteMediator)
+    val heroes: T? = null, // always list(see HeroRemoteMediator)
+    val lastUpdated: Long? = null
 )
