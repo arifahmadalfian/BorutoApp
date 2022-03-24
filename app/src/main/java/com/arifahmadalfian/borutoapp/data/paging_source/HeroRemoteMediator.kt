@@ -1,6 +1,5 @@
 package com.arifahmadalfian.borutoapp.data.paging_source
 
-import android.annotation.SuppressLint
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -10,8 +9,6 @@ import com.arifahmadalfian.borutoapp.data.local.BorutoDatabase
 import com.arifahmadalfian.borutoapp.data.remote.api.BorutoApi
 import com.arifahmadalfian.borutoapp.domain.model.Hero
 import com.arifahmadalfian.borutoapp.domain.model.HeroRemoteKeys
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -26,10 +23,10 @@ class HeroRemoteMediator @Inject constructor(
     override suspend fun initialize(): InitializeAction {
         val currentTime = System.currentTimeMillis()
         val lastUpdated = heroRemoteKeysDao.getRemoteKeys(heroId = 1)?.lastUpdated ?: 0L
-        val cacheTimeout = 5
+        val cacheTimeout = 1440
 
         val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
-        return if (diffInMinutes.toInt() >= cacheTimeout) {
+        return if (diffInMinutes.toInt() <= cacheTimeout) {
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
             InitializeAction.LAUNCH_INITIAL_REFRESH
