@@ -3,9 +3,11 @@ package com.arifahmadalfian.borutoapp.presentation.screens.home
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
+import com.arifahmadalfian.borutoapp.navigation.Screen
 import com.arifahmadalfian.borutoapp.presentation.common.ListContent
 
 @ExperimentalCoilApi
@@ -18,7 +20,11 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            HomeTopBar(onSearchClick = {})
+            HomeTopBar(
+                onSearchClick = {
+                    navController.navigate(Screen.Search.route)
+                }
+            )
         },
         content = {
             ListContent(
