@@ -10,6 +10,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,6 +35,8 @@ import com.arifahmadalfian.borutoapp.presentation.components.RatingWidget
 import com.arifahmadalfian.borutoapp.presentation.components.ShimmerEffect
 import com.arifahmadalfian.borutoapp.ui.theme.*
 import com.arifahmadalfian.borutoapp.util.Constants.BASE_URL
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @ExperimentalCoilApi
 @Composable
@@ -39,19 +45,30 @@ fun ListContent(
     navController: NavHostController
 ) {
     val result = handlePagingResult(heroes = heroes)
+    var isRefreshing by remember { mutableStateOf(false) }
     if (result) {
-        LazyColumn(
-            contentPadding = PaddingValues(all = SMALL_PADDING),
-            verticalArrangement = Arrangement.spacedBy(space = SMALL_PADDING)
+        SwipeRefresh(
+            swipeEnabled = true,
+            state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+            onRefresh = {
+                isRefreshing = true
+                heroes.refresh()
+                isRefreshing = false
+            }
         ) {
-            items(
-                items = heroes,
-                key = { hero ->
-                    hero.id
-                }
-            ) { hero ->
-                hero?.let {
-                    HeroItem(hero = it, navController = navController)
+            LazyColumn(
+                contentPadding = PaddingValues(all = SMALL_PADDING),
+                verticalArrangement = Arrangement.spacedBy(space = SMALL_PADDING)
+            ) {
+                items(
+                    items = heroes,
+                    key = { hero ->
+                        hero.id
+                    }
+                ) { hero ->
+                    hero?.let {
+                        HeroItem(hero = it, navController = navController)
+                    }
                 }
             }
         }
@@ -75,7 +92,7 @@ fun handlePagingResult(
                 false
             }
             error != null -> {
-                EmptyScreen(error = error)
+                EmptyScreen(error = error, heroes = heroes)
                 false
             }
             heroes.itemCount < 1 -> {
