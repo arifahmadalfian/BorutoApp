@@ -2,7 +2,7 @@ package com.arifahmadalfian.borutoapp.util
 
 object Constants {
 
-    const val BASE_URL = "http://192.168.34.145:8080"
+    const val BASE_URL = "http://192.168.19.23:8080"
 
     const val DETAILS_ARGUMENT_KEY = "heroId"
 

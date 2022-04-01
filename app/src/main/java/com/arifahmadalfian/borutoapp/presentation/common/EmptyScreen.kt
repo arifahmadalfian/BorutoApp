@@ -114,7 +114,6 @@ fun EmptyContent(
             )
         }
     }
-
 }
 
 fun parseErrorMessage(error: LoadState.Error): String {
