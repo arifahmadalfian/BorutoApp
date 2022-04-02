@@ -25,4 +25,8 @@ object Constants {
 
     const val MIN_BACKGROUND_IMAGE_HEIGHT = 0.4F
 
+    const val VIBRANT = "vibrant"
+    const val DARK_VIBRANT = "dark_vibrant"
+    const val ON_DARK_VIBRANT = "on_dark_vibrant"
+
 }
