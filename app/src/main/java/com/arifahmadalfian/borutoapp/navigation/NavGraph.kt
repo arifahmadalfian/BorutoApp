@@ -1,5 +1,6 @@
 package com.arifahmadalfian.borutoapp.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -15,6 +16,7 @@ import com.arifahmadalfian.borutoapp.presentation.screens.splash.SplashScreen
 import com.arifahmadalfian.borutoapp.presentation.screens.welcome.WelcomeScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
