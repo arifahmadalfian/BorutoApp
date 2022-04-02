@@ -2,7 +2,7 @@ package com.arifahmadalfian.borutoapp.util
 
 object Constants {
 
-    const val BASE_URL = "http://192.168.19.23:8080"
+    const val BASE_URL = "http://192.168.100.41:8080"
 
     const val DETAILS_ARGUMENT_KEY = "heroId"
 
@@ -23,5 +23,6 @@ object Constants {
     const val HALF_FILLED_STARS = "halfFilledStars"
     const val EMPTY_STARS = "emptyStars"
 
+    const val MIN_BACKGROUND_IMAGE_HEIGHT = 0.4F
 
 }
