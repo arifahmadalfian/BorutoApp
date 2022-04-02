@@ -33,6 +33,9 @@ object PaletteGenerator {
         }
     }
 
+    /**
+     * Extract Color from Bitmap
+     */
     fun extractColorFromBitmap(bitmap: Bitmap): Map<String, String> {
         return mapOf(
             VIBRANT to parseColorSwitch(

@@ -23,7 +23,7 @@ object Constants {
     const val HALF_FILLED_STARS = "halfFilledStars"
     const val EMPTY_STARS = "emptyStars"
 
-    const val MIN_BACKGROUND_IMAGE_HEIGHT = 0.4F
+    const val MIN_BACKGROUND_IMAGE_HEIGHT = 0.42F
 
     const val VIBRANT = "vibrant"
     const val DARK_VIBRANT = "dark_vibrant"
